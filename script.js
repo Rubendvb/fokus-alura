@@ -5,6 +5,18 @@ const longoBt = document.querySelector('.app__card-button--longo')
 const banner = document.querySelector('.app__image')
 const title = document.querySelector('.app__title')
 const btns = document.querySelectorAll('.app__card-button')
+const musicFocoInput = document.querySelector('#alternar-musica')
+const music = new Audio('./sons/luna-rise-part-one.mp3')
+
+music.loop = true
+
+musicFocoInput.addEventListener('change', () => {
+  if (music.paused) {
+    music.play()
+  } else {
+    music.pause()
+  }
+})
 
 focoBt.addEventListener('click', () => {
   alterarContexto('foco')
