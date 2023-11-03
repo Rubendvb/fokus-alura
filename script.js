@@ -29,21 +29,25 @@ musicFocoInput.addEventListener('change', () => {
 })
 
 focoBt.addEventListener('click', () => {
+  timeSeconds = 1500
   alterarContexto('foco')
   focoBt.classList.add('active')
 })
 
 curtoBt.addEventListener('click', () => {
+  timeSeconds = 300
   alterarContexto('descanso-curto')
   curtoBt.classList.add('active')
 })
 
 longoBt.addEventListener('click', () => {
+  timeSeconds = 900
   alterarContexto('descanso-longo')
   longoBt.classList.add('active')
 })
 
 function alterarContexto(contexto) {
+  mostrarTempo()
   btns.forEach(function (contexto) {
     contexto.classList.remove('active')
   })
@@ -128,9 +132,13 @@ function zerar() {
 }
 
 function mostrarTempo() {
-  const time = timeSeconds
+  const time = new Date(timeSeconds * 1000)
+  const timeFormatted = time.toLocaleTimeString('pt-br', {
+    minute: '2-digit',
+    second: '2-digit',
+  })
 
-  timeScreen.innerHTML = `${time}`
+  timeScreen.innerHTML = `${timeFormatted}`
 }
 
 mostrarTempo()
