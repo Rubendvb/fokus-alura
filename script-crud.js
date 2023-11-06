@@ -25,6 +25,12 @@ const taskIconSvg = `
 </svg>`
 
 const selectTask = (task, li) => {
+  // Evita selecionar a task finalizada
+  if (task.finish) {
+    return
+  }
+  //
+
   if (itemTaskSelect) {
     itemTaskSelect.classList.remove('app__section-task-list-item-active')
   }
@@ -98,10 +104,16 @@ function createTask(task) {
   }
 
   svgIcon.addEventListener('click', (e) => {
-    e.stopPropagation()
+    if (task === taskSelect) {
+      e.stopPropagation()
 
-    button.setAttribute('disable', true)
-    li.classList.add('app__section-task-list-item-complete')
+      button.setAttribute('disable', true)
+      li.classList.add('app__section-task-list-item-complete')
+
+      taskSelect.finish = true
+
+      updateLocalStorage()
+    }
   })
 
   if (task.finish) {
@@ -158,4 +170,14 @@ cancelBtn.addEventListener('click', () => {
   formClear()
 
   formTask.classList.add('hidden')
+})
+
+document.addEventListener('TarefaFinalizada', function (e) {
+  if (taskSelect) {
+    taskSelect.finish = true
+    itemTaskSelect.classList.add('app__section-task-list-item-complete')
+    itemTaskSelect.querySelector('button').setAttribute('disabled', true)
+
+    updateLocalStorage()
+  }
 })
