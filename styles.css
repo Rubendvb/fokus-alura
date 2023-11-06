@@ -7,7 +7,7 @@
   --lils: #b872ff;
   --linear-botes: linear-gradient(180deg, #b872ff 0%, #144480 100%);
   --fundo-card: rgba(255, 255, 255, 0.5);
-  --fundo-card-concludo: rgba(0, 244, 191, 0.4);
+  --fundo-card-concluido: rgba(0, 244, 191, 0.4);
 }
 
 [data-contexto='foco'] {
@@ -140,7 +140,6 @@ h6 {
 
 .app__card-timer {
   color: var(--color-secondary);
-  text-align: center;
   font-family: Unbounded;
   font-size: 12rem;
   font-style: normal;
@@ -258,8 +257,8 @@ h6 {
   justify-content: space-between;
 }
 
-.app_button-edit,
-.app_button-more {
+.app__button-edit,
+.app__button-more {
   border: none;
   cursor: pointer;
   outline: inherit;
@@ -306,7 +305,7 @@ h6 {
 }
 
 .app__section-task-list-item-complete.app__section-task-list-item {
-  background: var(--fundo-card-concludo);
+  background: var(--fundo-card-concluido);
   cursor: inherit;
 }
 
@@ -383,7 +382,6 @@ h6 {
 }
 
 .app__button--add-task {
-  border: none;
   cursor: pointer;
   outline: inherit;
   background-color: transparent;

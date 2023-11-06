@@ -13,6 +13,8 @@ const localStorageTasks = localStorage.getItem('tasks')
 let tasks = localStorageTasks ? JSON.parse(localStorageTasks) : []
 let taskSelect = null
 let itemTaskSelect = null
+let taskEdit = null
+let paragraphEdit = null
 
 const taskIconSvg = `
 <svg class="app__section-task-icon-status" width="24" height="24" viewBox="0 0 24 24" 
@@ -47,6 +49,8 @@ const formClear = () => {
   textarea.value = ''
 }
 
+const upadatetask = () => {}
+
 function createTask(task) {
   const li = document.createElement('li')
   li.classList.add('app__section-task-list-item')
@@ -57,14 +61,35 @@ function createTask(task) {
   const paragraph = document.createElement('p')
   paragraph.classList.add('app__section-task-list-item-description')
 
+  const button = document.createElement('button')
+  const editIcon = document.createElement('img')
+
   paragraph.textContent = task.description
+
+  editIcon.setAttribute('src', './imagens/edit.png')
+
+  button.classList.add('app__button-edit')
+  button.appendChild(editIcon)
 
   li.onclick = () => {
     selectTask(task, li)
   }
 
+  svgIcon.addEventListener('click', (e) => {
+    e.stopPropagation()
+
+    button.setAttribute('disable', true)
+    li.classList.add('app__section-task-list-item-complete')
+  })
+
+  if (task.finish) {
+    button.setAttribute('disable', true)
+    li.classList.add('app__section-task-list-item-complete')
+  }
+
   li.appendChild(svgIcon)
   li.appendChild(paragraph)
+  li.appendChild(button)
 
   return li
 }
