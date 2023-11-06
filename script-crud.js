@@ -4,6 +4,7 @@ const toggleFormTaskBtn = document.querySelector('.app__button--add-task')
 const formLabel = document.querySelector('.app__form-label')
 const textarea = document.querySelector('.app__form-textarea')
 const cancelBtn = document.querySelector('.app__form-footer__button--cancel')
+const deleteBtn = document.querySelector('.app__form-footer__button--delete')
 const taskActiveDescription = document.querySelector(
   '.app__section-active-task-description'
 )
@@ -170,6 +171,26 @@ cancelBtn.addEventListener('click', () => {
   formClear()
 
   formTask.classList.add('hidden')
+})
+
+deleteBtn.addEventListener('click', () => {
+  if (taskSelect) {
+    const index = tasks.indexOf(taskSelect)
+
+    if (index !== -1) {
+      tasks.splice(index, 1)
+    }
+
+    itemTaskSelect.remove()
+
+    tasks.filter((item) => item != taskSelect)
+
+    itemTaskSelect = null
+    taskSelect = null
+  }
+
+  updateLocalStorage()
+  formClear()
 })
 
 document.addEventListener('TarefaFinalizada', function (e) {
