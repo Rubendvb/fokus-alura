@@ -46,10 +46,26 @@ const selectTask = (task, li) => {
 }
 
 const formClear = () => {
+  taskEdit = null
+  paragraphEdit = null
+
   textarea.value = ''
 }
 
-const upadatetask = () => {}
+const updateTask = (task, paragraph) => {
+  console.log(task, paragraph)
+  if (taskEdit === task) {
+    formClear()
+
+    return
+  }
+
+  formLabel.textContent = 'Editando tarefa'
+  taskEdit = task
+  paragraphEdit = paragraph
+  textarea.value = task.description
+  formTask.classList.remove('hidden')
+}
 
 function createTask(task) {
   const li = document.createElement('li')
@@ -70,6 +86,12 @@ function createTask(task) {
 
   button.classList.add('app__button-edit')
   button.appendChild(editIcon)
+
+  button.addEventListener('click', (e) => {
+    e.stopPropagation()
+
+    updateTask(task, paragraph)
+  })
 
   li.onclick = () => {
     selectTask(task, li)
@@ -112,15 +134,20 @@ const updateLocalStorage = () => {
 formTask.addEventListener('submit', (e) => {
   e.preventDefault()
 
-  const task = {
-    description: textarea.value,
-    finish: false,
+  if (taskEdit) {
+    taskEdit.description = textarea.value
+    paragraphEdit.textContent = textarea.value
+  } else {
+    const task = {
+      description: textarea.value,
+      finish: false,
+    }
+
+    tasks.push(task)
+
+    const taskItem = createTask(task)
+    taskListContainer.appendChild(taskItem)
   }
-
-  tasks.push(task)
-
-  const taskItem = createTask(task)
-  taskListContainer.appendChild(taskItem)
 
   updateLocalStorage()
 
