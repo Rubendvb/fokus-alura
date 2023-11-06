@@ -4,10 +4,15 @@ const toggleFormTaskBtn = document.querySelector('.app__button--add-task')
 const formLabel = document.querySelector('.app__form-label')
 const textarea = document.querySelector('.app__form-textarea')
 const cancelBtn = document.querySelector('.app__form-footer__button--cancel')
+const taskActiveDescription = document.querySelector(
+  '.app__section-active-task-description'
+)
 
 const localStorageTasks = localStorage.getItem('tasks')
 
 let tasks = localStorageTasks ? JSON.parse(localStorageTasks) : []
+let taskSelect = null
+let itemTaskSelect = null
 
 const taskIconSvg = `
 <svg class="app__section-task-icon-status" width="24" height="24" viewBox="0 0 24 24" 
@@ -16,6 +21,27 @@ const taskIconSvg = `
   <path 
     d="M9 16.1719L19.5938 5.57812L21 6.98438L9 18.9844L3.42188 13.4062L4.82812 12L9 16.1719Z" fill="#01080E" />
 </svg>`
+
+const selectTask = (task, li) => {
+  if (itemTaskSelect) {
+    itemTaskSelect.classList.remove('app__section-task-list-item-active')
+  }
+
+  if (taskSelect == task) {
+    taskActiveDescription.textContent = null
+    itemTaskSelect = null
+    taskSelect = null
+
+    return
+  }
+
+  li.classList.add('app__section-task-list-item-active')
+
+  taskActiveDescription.textContent = task.description
+
+  taskSelect = task
+  itemTaskSelect = li
+}
 
 const formClear = () => {
   textarea.value = ''
@@ -32,6 +58,10 @@ function createTask(task) {
   paragraph.classList.add('app__section-task-list-item-description')
 
   paragraph.textContent = task.description
+
+  li.onclick = () => {
+    selectTask(task, li)
+  }
 
   li.appendChild(svgIcon)
   li.appendChild(paragraph)
