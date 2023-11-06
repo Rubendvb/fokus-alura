@@ -5,6 +5,10 @@ const formLabel = document.querySelector('.app__form-label')
 const textarea = document.querySelector('.app__form-textarea')
 const cancelBtn = document.querySelector('.app__form-footer__button--cancel')
 const deleteBtn = document.querySelector('.app__form-footer__button--delete')
+const deleteTasksCompletedBtn = document.getElementById(
+  'btn-remover-concluidas'
+)
+deleteAllTasksBtn = document.getElementById('btn-remover-todas')
 const taskActiveDescription = document.querySelector(
   '.app__section-active-task-description'
 )
@@ -72,6 +76,20 @@ const updateTask = (task, paragraph) => {
   paragraphEdit = paragraph
   textarea.value = task.description
   formTask.classList.remove('hidden')
+}
+
+const deleteTasksFinish = (onlyCompleted) => {
+  const seletor = onlyCompleted
+    ? '.app__section-task-list-item-complete'
+    : '.app__section-task-list-item'
+
+  document.querySelectorAll(seletor).forEach((element) => {
+    element.remove()
+  })
+
+  tasks = onlyCompleted ? tasks.filter((task) => !task.finish) : []
+
+  updateLocalStorage()
 }
 
 function createTask(task) {
@@ -192,6 +210,10 @@ deleteBtn.addEventListener('click', () => {
   updateLocalStorage()
   formClear()
 })
+
+deleteTasksCompletedBtn.addEventListener('click', () => deleteTasksFinish(true))
+
+deleteAllTasksBtn.addEventListener('click', () => deleteTasksFinish(false))
 
 document.addEventListener('TarefaFinalizada', function (e) {
   if (taskSelect) {
