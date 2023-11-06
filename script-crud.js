@@ -15,6 +15,10 @@ const taskIconSvg = `
     d="M9 16.1719L19.5938 5.57812L21 6.98438L9 18.9844L3.42188 13.4062L4.82812 12L9 16.1719Z" fill="#01080E" />
 </svg>`
 
+const formClear = () => {
+  textarea.value = ''
+}
+
 function createTask(task) {
   const li = document.createElement('li')
   li.classList.add('app__section-task-list-item')
@@ -57,11 +61,11 @@ formTask.addEventListener('submit', (e) => {
   const taskItem = createTask(task)
   taskListContainer.appendChild(taskItem)
 
-  textarea.value = ''
+  formClear()
 })
 
 cancelBtn.addEventListener('click', () => {
-  formTask.classList.add('hidden')
+  formClear()
 
-  textarea.value = ''
+  formTask.classList.add('hidden')
 })
