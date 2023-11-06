@@ -5,7 +5,9 @@ const formLabel = document.querySelector('.app__form-label')
 const textarea = document.querySelector('.app__form-textarea')
 const cancelBtn = document.querySelector('.app__form-footer__button--cancel')
 
-let tasks = []
+const localStorageTasks = localStorage.getItem('tasks')
+
+let tasks = localStorageTasks ? JSON.parse(localStorageTasks) : []
 
 const taskIconSvg = `
 <svg class="app__section-task-icon-status" width="24" height="24" viewBox="0 0 24 24" 
@@ -48,6 +50,10 @@ toggleFormTaskBtn.addEventListener('click', () => {
   formTask.classList.toggle('hidden')
 })
 
+const updateLocalStorage = () => {
+  localStorage.setItem('tasks', JSON.stringify(tasks))
+}
+
 formTask.addEventListener('submit', (e) => {
   e.preventDefault()
 
@@ -60,6 +66,8 @@ formTask.addEventListener('submit', (e) => {
 
   const taskItem = createTask(task)
   taskListContainer.appendChild(taskItem)
+
+  updateLocalStorage()
 
   formClear()
 })
